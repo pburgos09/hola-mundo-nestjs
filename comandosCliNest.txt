@@ -1,0 +1,14 @@
+** Con el siguiente comando nest se va actualizando a medida que agregamos controladores **
+
+npm run start:dev
+
+** Con el siguiente comando generamos un controlador en nest, utilizando la terminal o consola (entre parentesis coloco las abreviaturas) **
+
+nest generate(g) controller(co) *nombre_controlador*
+
+** se puede agregar el flag --no-spec para que no cree el archivo .spec **
+
+** con este flag --dry-run se puede ver una previsualizacion de lo que crearia nest pero realmente no lo está creando **
+
+** se puede agregar los controladores en una carpeta especifica nombrandola en el comando por ejemplo controllers/*nombre_controlador* de esta manera se crea una carpeta llamada controller si no la hubiera y crea dentro de ella el controlador con el nombre que especificamos **
+
