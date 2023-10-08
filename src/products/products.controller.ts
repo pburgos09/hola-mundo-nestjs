@@ -1,9 +1,11 @@
-import { Controller, Get, Param } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 
 // 'products' hace referencia a la ruta que se va a utilizar para acceder a este controlador, en este ejemplo seria http://localhost:3000/products
 @Controller('products')
 export class ProductsController {
   // Acá irán los métodos que se utilizarán para acceder a los productos
+
+  //MÉTODOS GET
 
   //A este decorador se le puede pasar un parámetro que es la ruta que se va a utilizar para acceder a este método, en este caso sería http://localhost:3000/products/hot
   @Get('hot')
@@ -44,5 +46,23 @@ export class ProductsController {
   //el nombre que le proporcionemos a este método no tiene tanta relevancia dentro del decorador @Get, pero si es importante que sea descriptivo para que se entienda que es lo que hace
   getHelloInProducts(): string {
     return 'Estamos en productos!!!';
+  }
+
+  //MÉTODOS POST
+
+  @Post()
+  //Dentro del método se puede acceder al body, que seria los datos que ingresaria un usuario en un form por ejemplo, mediante el decorador @Body
+
+  /* - Método sin desestructurar el objeto body
+
+  createProduct(@Body() body): string {
+    //body contiene los datos que se ingresaron en el form
+    return `Creo un producto ${body.name} con descripción ${body.description}`;
+  } */
+  createProduct(
+    @Body('name') name: string,
+    @Body('description') description: string,
+  ): string {
+    return `Creo un producto ${name} con descripción ${description}`;
   }
 }
