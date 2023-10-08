@@ -1,4 +1,13 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  HttpCode,
+  HttpStatus,
+  Param,
+  Post,
+  Res,
+} from '@nestjs/common';
 
 // 'products' hace referencia a la ruta que se va a utilizar para acceder a este controlador, en este ejemplo seria http://localhost:3000/products
 @Controller('products')
@@ -6,6 +15,14 @@ export class ProductsController {
   // Acá irán los métodos que se utilizarán para acceder a los productos
 
   //MÉTODOS GET
+
+  //A este decorador se le puede pasar un parámetro que es la ruta que se va a utilizar para acceder a este método, en este caso sería http://localhost:3000/products/ruta-error-404. Ademas utilizamos el decorador @HttpCode para devolver un código de estado distinto al 200 por defecto, en este caso se utiliza el código NOT_FOUND que es el 404
+
+  @Get('ruta-error-404')
+  @HttpCode(HttpStatus.NOT_FOUND)
+  rutaConError404(): string {
+    return 'Esto es un error 404';
+  }
 
   //A este decorador se le puede pasar un parámetro que es la ruta que se va a utilizar para acceder a este método, en este caso sería http://localhost:3000/products/hot
   @Get('hot')
@@ -23,9 +40,18 @@ export class ProductsController {
     return `Estás buscando el producto con id ${params.id}`;
   } */
 
+  //Utilizamos el decorador @Res para poder devolver una respuesta personalizada, con un status code, dependiendo de la condición que se cumpla, en este caso si el id es menor a 100 se devuelve un status code 200 y un mensaje personalizado, en caso contrario se devuelve un status code 404 y un mensaje personalizado
   @Get(':id')
-  find(@Param('id') id: number): string {
-    return `Estás buscando el producto con id ${id}`;
+  find(@Res() response, @Param('id') id: number): string {
+    if (id < 100) {
+      return response
+        .status(HttpStatus.OK)
+        .send(`Página del producto con id ${id}`);
+    } else {
+      return response
+        .status(HttpStatus.NOT_FOUND)
+        .send(`Producto no encontrado`);
+    }
   }
 
   //A este decorador se le pueden pasar varios parámetros dinámicos, en este caso el id del producto y el tamaño del mismo, y como en el decorador anterior se puede acceder a estos parámetros mediante el objeto params utilizando el decorador @Param
@@ -49,6 +75,16 @@ export class ProductsController {
   }
 
   //MÉTODOS POST
+
+  @Post('create')
+  //Para devolver un código de estado distinto al 200 por defecto se puede utilizar el decorador @HttpCode y pasarle como parámetro el código de estado que se quiera devolver
+  //@HttpCode(204)
+
+  //Se puede utilizar el HttpStatus para devolver un código de estado distinto al 200 por defecto, en este caso se utiliza el código NO_CONTENT que es el 204
+  @HttpCode(HttpStatus.NO_CONTENT)
+  create(@Body() body) {
+    return body;
+  }
 
   @Post()
   //Dentro del método se puede acceder al body, que seria los datos que ingresaria un usuario en un form por ejemplo, mediante el decorador @Body
