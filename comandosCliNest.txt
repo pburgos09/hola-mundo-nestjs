@@ -12,3 +12,6 @@ nest generate(g) controller(co) *nombre_controlador*
 
 ** se puede agregar los controladores en una carpeta especifica nombrandola en el comando por ejemplo controllers/*nombre_controlador* de esta manera se crea una carpeta llamada controller si no la hubiera y crea dentro de ella el controlador con el nombre que especificamos **
 
+** Con el siguiente comando generamos un nuevo servicio en nest, utilizando la terminal o consola (entre parentesis coloco las abreviaturas) **
+
+nest generate(g) service(s) products

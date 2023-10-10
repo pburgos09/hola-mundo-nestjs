@@ -13,11 +13,15 @@ import {
   Query,
   Res,
 } from '@nestjs/common';
+import { ProductsService } from './products.service';
 
 // 'products' hace referencia a la ruta que se va a utilizar para acceder a este controlador, en este ejemplo seria http://localhost:3000/products
 @Controller('products')
 export class ProductsController {
-  // Acá irán los métodos que se utilizarán para acceder a los productos
+  //Lo que hace la siguiente linea es inyectar el servicio de productos en el controlador, de esta manera se puede acceder a los métodos que se encuentran en el servicio de productos
+  constructor(private readonly productsService: ProductsService) {}
+
+  // Acá irán los métodos que se utilizarán para )acceder a los productos
 
   //MÉTODOS GET
 
@@ -75,8 +79,9 @@ export class ProductsController {
 
   @Get()
   //el nombre que le proporcionemos a este método no tiene tanta relevancia dentro del decorador @Get, pero si es importante que sea descriptivo para que se entienda que es lo que hace
-  getHelloInProducts(): string {
-    return 'Estamos en productos!!!';
+  getHelloInProducts() {
+    //En este caso se llama al método getAll del servicio de productos para devolver todos los productos
+    return this.productsService.getAll();
   }
 
   // Aca vemos como se puede añadir un query param a la ruta con el decorador @Query, de esta manera se puede acceder a los datos que se pasan por query params por ejemplo en una ruta como http://localhost:3000/products/cars?count=10
@@ -111,6 +116,12 @@ export class ProductsController {
     @Body('name') name: string,
     @Body('description') description: string,
   ): string {
+    //Acá se llama al método insert del servicio de productos para insertar un nuevo producto
+    this.productsService.insert({
+      id: this.productsService.getAll().length + 1,
+      name,
+      description,
+    });
     return `Creo un producto ${name} con descripción ${description}`;
   }
 
