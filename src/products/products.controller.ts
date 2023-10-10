@@ -6,9 +6,11 @@ import {
   HttpCode,
   HttpStatus,
   Param,
+  ParseIntPipe,
   Patch,
   Post,
   Put,
+  Query,
   Res,
 } from '@nestjs/common';
 
@@ -75,6 +77,13 @@ export class ProductsController {
   //el nombre que le proporcionemos a este método no tiene tanta relevancia dentro del decorador @Get, pero si es importante que sea descriptivo para que se entienda que es lo que hace
   getHelloInProducts(): string {
     return 'Estamos en productos!!!';
+  }
+
+  // Aca vemos como se puede añadir un query param a la ruta con el decorador @Query, de esta manera se puede acceder a los datos que se pasan por query params por ejemplo en una ruta como http://localhost:3000/products/cars?count=10
+  @Get('cars')
+  //Dentro del decorador de @Query podemos recibir, en este ejemplo, un parámetro con nombre count, ademas con el pipe ParseIntPipe podemos indicar que el parámetro count debe ser un número entero y pueda validar esto, para que en caso de que no sea un entero nos arroje un error 400 Bad Request y no se ejecute el método
+  rutaQuery(@Query('count', ParseIntPipe) carCount: number) {
+    return carCount;
   }
 
   //MÉTODOS POST
