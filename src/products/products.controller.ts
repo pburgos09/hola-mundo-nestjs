@@ -1,11 +1,14 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   HttpCode,
   HttpStatus,
   Param,
+  Patch,
   Post,
+  Put,
   Res,
 } from '@nestjs/common';
 
@@ -100,5 +103,25 @@ export class ProductsController {
     @Body('description') description: string,
   ): string {
     return `Creo un producto ${name} con descripción ${description}`;
+  }
+
+  //MÉTODOS PUT
+  @Put(':id')
+  update(@Param('id') id: number, @Body() body) {
+    return `Estás haciendo una operación de actualización del recurso ${id} 
+    con ${body.name} y ${body.description}`;
+  }
+
+  //MÉTODOS PATCH
+  @Patch(':id')
+  partialUpdate(@Param('id') id: number, @Body() body) {
+    return `Actualización parcial del ítem ${id} con ${body.name} y ${body.description}`;
+  }
+
+  //MÉTODOS DELETE
+  @Delete(':id')
+  @HttpCode(HttpStatus.NO_CONTENT)
+  delete(@Param('id') id: number) {
+    return `Hemos borrado el producto ${id}`;
   }
 }
