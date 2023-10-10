@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { Product } from './interfaces/product/product.interface';
 
 //Los servicios son clases que se encargan de la lógica de negocio de la aplicación, en este caso se encargan de la lógica de negocio de los productos, aca es el lugar ideal para hacer todas las comprobaciones necesarias antes de realizar operaciones
 
@@ -8,7 +9,7 @@ import { Injectable } from '@nestjs/common';
 
 @Injectable()
 export class ProductsService {
-  private products = [
+  private products: Product[] = [
     {
       id: 1,
       name: 'Vela aromática',
@@ -21,10 +22,10 @@ export class ProductsService {
     },
   ];
 
-  getAll() {
+  getAll(): Product[] {
     return this.products;
   }
-  insert(product) {
+  insert(product: Product) {
     this.products = [...this.products, product];
   }
 }

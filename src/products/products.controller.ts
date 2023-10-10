@@ -14,6 +14,7 @@ import {
   Res,
 } from '@nestjs/common';
 import { ProductsService } from './products.service';
+import { Product } from './interfaces/product/product.interface';
 
 // 'products' hace referencia a la ruta que se va a utilizar para acceder a este controlador, en este ejemplo seria http://localhost:3000/products
 @Controller('products')
@@ -79,7 +80,7 @@ export class ProductsController {
 
   @Get()
   //el nombre que le proporcionemos a este método no tiene tanta relevancia dentro del decorador @Get, pero si es importante que sea descriptivo para que se entienda que es lo que hace
-  getHelloInProducts() {
+  getHelloInProducts(): Product[] {
     //En este caso se llama al método getAll del servicio de productos para devolver todos los productos
     return this.productsService.getAll();
   }

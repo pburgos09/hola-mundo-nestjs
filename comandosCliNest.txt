@@ -15,3 +15,7 @@ nest generate(g) controller(co) *nombre_controlador*
 ** Con el siguiente comando generamos un nuevo servicio en nest, utilizando la terminal o consola (entre parentesis coloco las abreviaturas) **
 
 nest generate(g) service(s) products
+
+**Con el siguiente comando generamos una interface en nest, utilizando la terminal o consola (entre parentesis coloco las abreviaturas) **
+
+nest generate(g) interface products/interfaces/product
