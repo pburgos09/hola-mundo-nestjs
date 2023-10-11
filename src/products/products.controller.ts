@@ -58,6 +58,8 @@ export class ProductsController {
         .status(HttpStatus.OK)
         .send(`Página del producto con id ${id}`);
     } else {
+      //se puede configurar un throw para devolver una excepción personalizada, en este caso se devuelve un error 404, ademas se puede pasar un mensaje personalizado que se mostrará en el navegador
+      //throw new NotFoundException(`Producto no encontrado`,'No encontrado');
       return response
         .status(HttpStatus.NOT_FOUND)
         .send(`Producto no encontrado`);
