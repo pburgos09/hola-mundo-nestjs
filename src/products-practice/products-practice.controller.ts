@@ -6,6 +6,7 @@ import {
   HttpCode,
   HttpStatus,
   Param,
+  ParseIntPipe,
   Post,
   Put,
 } from '@nestjs/common';
@@ -24,7 +25,7 @@ export class ProductsPracticeController {
   }
 
   @Get(':id')
-  find(@Param('id') id: string): Product {
+  async find(@Param('id', ParseIntPipe) id: string): Promise<Product> {
     return this.productsPracticeService.getiId(parseInt(id));
   }
 
@@ -35,7 +36,14 @@ export class ProductsPracticeController {
   }
 
   @Put(':id')
-  update(@Param('id') id: number, @Body() body) {
+  async update(
+    @Param(
+      'id',
+      new ParseIntPipe({ errorHttpStatusCode: HttpStatus.NOT_ACCEPTABLE }),
+    )
+    id: number,
+    @Body() body,
+  ) {
     this.productsPracticeService.update(id, body);
   }
 

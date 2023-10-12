@@ -89,8 +89,8 @@ export class ProductsController {
 
   // Aca vemos como se puede añadir un query param a la ruta con el decorador @Query, de esta manera se puede acceder a los datos que se pasan por query params por ejemplo en una ruta como http://localhost:3000/products/cars?count=10
   @Get('cars')
-  //Dentro del decorador de @Query podemos recibir, en este ejemplo, un parámetro con nombre count, ademas con el pipe ParseIntPipe podemos indicar que el parámetro count debe ser un número entero y pueda validar esto, para que en caso de que no sea un entero nos arroje un error 400 Bad Request y no se ejecute el método
-  rutaQuery(@Query('count', ParseIntPipe) carCount: number) {
+  //Dentro del decorador de @Query podemos recibir, en este ejemplo, un parámetro con nombre count, ademas con el pipe ParseIntPipe podemos indicar que el parámetro count debe ser un número entero y pueda validar esto, para que en caso de que no sea un entero nos arroje un error 400 Bad Request y no se ejecute el método, ademas agregamos async para que se ejecute de manera asíncrona porque el pipe devuelve una promesa
+  async rutaQuery(@Query('count', ParseIntPipe) carCount: number) {
     return carCount;
   }
 
@@ -130,7 +130,15 @@ export class ProductsController {
 
   //MÉTODOS PUT
   @Put(':id')
-  update(@Param('id') id: number, @Body() body) {
+  //Podemos devolver un código personalizado para cuando el pipe no se cumpla, en este caso se devuelve un código 406 Not Acceptable
+  async update(
+    @Param(
+      'id',
+      new ParseIntPipe({ errorHttpStatusCode: HttpStatus.NOT_ACCEPTABLE }),
+    )
+    id: number,
+    @Body() body,
+  ) {
     return `Estás haciendo una operación de actualización del recurso ${id} 
     con ${body.name} y ${body.description}`;
   }
