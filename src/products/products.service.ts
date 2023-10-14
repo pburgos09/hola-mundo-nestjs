@@ -14,11 +14,13 @@ export class ProductsService {
       id: 1,
       name: 'Vela aromática',
       description: 'Esta vela lanza ricos olores',
+      stock: 20,
     },
     {
       id: 2,
       name: 'Marco de fotos pequeño',
       description: 'Marco ideal para tus fotos 10x15',
+      stock: 10,
     },
   ];
 

@@ -12,6 +12,7 @@ import {
 } from '@nestjs/common';
 import { ProductsPracticeService } from './services/products-practice/products-practice.service';
 import { Product } from 'src/products/interfaces/product/product.interface';
+import { ProductPracticeDto } from './dto/product-practice.dto/product-practice.dto';
 
 @Controller('products-practice')
 export class ProductsPracticeController {
@@ -31,8 +32,8 @@ export class ProductsPracticeController {
 
   @Post()
   @HttpCode(HttpStatus.NO_CONTENT)
-  createProduct(@Body() body) {
-    this.productsPracticeService.insert(body);
+  createProduct(@Body() productDto: ProductPracticeDto) {
+    this.productsPracticeService.insert(productDto);
   }
 
   @Put(':id')

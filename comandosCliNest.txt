@@ -23,3 +23,7 @@ nest generate(g) interface products/interfaces/product
 ** Con el siguiente comando generamos un modulo en nest, utilizando la terminal o consola (entre parentesis coloco las abreviaturas) **
 
 nest generate(g) module(mo) products
+
+** Con el siguiente comando generamos un DTO en nest, utilizando la terminal o consola (entre parentesis coloco las abreviaturas) **
+
+nest generate(g) class(cl) products/dto/product.dto

@@ -4,6 +4,7 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
+import { ProductPracticeDto } from 'src/products-practice/dto/product-practice.dto/product-practice.dto';
 import { Product } from 'src/products/interfaces/product/product.interface';
 
 @Injectable()
@@ -13,11 +14,13 @@ export class ProductsPracticeService {
       id: 1,
       name: 'Vela aromática',
       description: 'Vela aromática de vainilla',
+      stock: 20,
     },
     {
       id: 2,
       name: 'Marco de fotos pequeño',
       description: 'Marcon ideal para tus fotos de 10x15',
+      stock: 10,
     },
   ];
 
@@ -34,13 +37,14 @@ export class ProductsPracticeService {
     }
   }
 
-  insert(product: Product): void {
+  insert(product: ProductPracticeDto): void {
     this.products = [
       ...this.products,
       {
         id: this.lastId() + 1,
         name: product.name,
         description: product.description,
+        stock: product.stock,
       },
     ];
   }

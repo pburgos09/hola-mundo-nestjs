@@ -15,6 +15,7 @@ import {
 } from '@nestjs/common';
 import { ProductsService } from './products.service';
 import { Product } from './interfaces/product/product.interface';
+import { ProductDto } from './dto/product.dto/product.dto';
 
 // 'products' hace referencia a la ruta que se va a utilizar para acceder a este controlador, en este ejemplo seria http://localhost:3000/products
 @Controller('products')
@@ -115,17 +116,17 @@ export class ProductsController {
     //body contiene los datos que se ingresaron en el form
     return `Creo un producto ${body.name} con descripción ${body.description}`;
   } */
-  createProduct(
-    @Body('name') name: string,
-    @Body('description') description: string,
-  ): string {
+  createProduct(@Body() productDto: ProductDto): string {
     //Acá se llama al método insert del servicio de productos para insertar un nuevo producto
-    this.productsService.insert({
+    //Al usar un DTO se puede acceder a los datos del body de una manera mas ordenada y desestructurada, a su vez necesitamos crear un nuevo producto con los datos del DTO para poder insertarlo en el arreglo de productos
+    const newProduct: Product = {
       id: this.productsService.getAll().length + 1,
-      name,
-      description,
-    });
-    return `Creo un producto ${name} con descripción ${description}`;
+      name: productDto.name,
+      description: productDto.description,
+      stock: productDto.stock,
+    };
+    this.productsService.insert(newProduct);
+    return `Creo un producto ${productDto.name} con descripción ${productDto.description}`;
   }
 
   //MÉTODOS PUT
